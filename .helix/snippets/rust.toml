@@ -1,0 +1,106 @@
+[[snippets]]
+prefix = "moderror"
+scope = ["rust"]
+body = """use derive_more::derive::{Display, From};
+
+/// Errors of the $1 module.
+#[derive(Debug, Display, From)]
+#[display(": {_variant}")]
+pub enum Error {}
+
+impl core::error::Error for Error {}"""
+description = "the template of an error module"
+
+[[snippets]]
+prefix = "modtest"
+scope = ["rust"]
+body = """#[cfg(test)]
+#[cfg_attr(coverage_nightly, coverage(off))]
+mod tests {
+
+    use test_log::test;
+  
+    use super::super::Error;
+    use super::*;
+    type TestResult = core::result::Result<(), Box<dyn core::error::Error>>;
+
+    #[test]
+    fn $1() -> TestResult {
+        // Given
+        $0
+
+        // When
+
+
+        // Then
+
+
+        Ok(())
+    }
+}"""
+description = "add a test module"
+
+[[snippets]]
+prefix = "test"
+scope = ["rust"]
+body = """#[test]
+fn $1() -> TestResult {
+    // Given
+    $0
+
+    // When
+
+
+    // Then
+
+
+    Ok(())
+}
+"""
+description = "Add a test"
+
+[[snippets]]
+prefix = "atest"
+scope = ["rust"]
+body = """#[test(tokio::test)]
+async fn $1() -> TestResult {
+    // Given
+    $0
+
+    // When
+
+
+    // Then
+
+
+    Ok(())
+}"""
+description = "Add an asynchronous test"
+
+[[snippets]]
+prefix = "doc"
+scope = ["rust"]
+body = """
+/// ${1:Description.}$0
+///
+/// # Parameters
+/// * `${2:`argument_name`}` - ${3:type and description},
+///
+/// # Example
+/// ```rust
+/// # use bifrost::Error;
+/// // ${4:write me later}
+/// # Ok::<(), Error>(())
+/// ```"""
+description = "A rust comment with description, parameters, returns and examples."
+
+[[snippets]]
+prefix = "//!"
+"body" = """
+//! ${1:Description.}$0
+//!
+//! # Examples
+//! ```rust
+//! ${2:write me later}
+//! ```"""
+description = "A special Rust comment to describe a crate, with description and examples."
